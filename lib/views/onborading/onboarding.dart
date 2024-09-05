@@ -1,4 +1,5 @@
 import 'package:agrogenesis/app/app_theme.dart';
+import 'package:agrogenesis/views/auth/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -13,10 +14,6 @@ class OnboardingScreens extends StatefulWidget {
 class _OnboardingScreensState extends State<OnboardingScreens> {
   final PageController _pageController = PageController();
   bool onlastPage = false;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +59,10 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                 imagePath: 'assets/onboarding/seeds_fertilizers.png',
                 description:
                     'Browse and buy seeds and fertilizers from trusted providers based on reviews.',
-                onNextPressed: () {},
+                onNextPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SignupScreen()));
+                },
                 buttontext: 'Get Started',
                 imageType: 'png',
               ),
@@ -111,7 +111,10 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                       backgroundColor: greenColor,
                       foregroundColor: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SignupScreen()));
+                    },
                     child: const Padding(
                       padding: EdgeInsets.symmetric(vertical: 3.0),
                       child: Text(
@@ -158,12 +161,12 @@ class OnboardingScreen extends StatelessWidget {
               : SizedBox(
                   child: Image.asset(
                     imagePath,
-                    height: 150,
+                    height: 420,
                   ),
                 ),
           if (imageType != 'lottie')
             const SizedBox(
-              height: 100,
+              height: 0,
             ),
           Text(
             title,
