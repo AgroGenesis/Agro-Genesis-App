@@ -1,19 +1,11 @@
+import 'package:agrogenesis/providers/crop_yield_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:csc_picker/csc_picker.dart';
 
-class LocationSelection extends StatefulWidget {
-  const LocationSelection({super.key});
-
-  @override
-  State<LocationSelection> createState() => _LocationSelectionState();
-}
-
-class _LocationSelectionState extends State<LocationSelection> {
-  String? countryValue = "";
-  String? stateValue = "";
-  String? cityValue = "";
-  String? address = "";
-
+class LocationSelection extends StatelessWidget {
+  const LocationSelection({super.key, required this.provider});
+  final CropYieldProvider provider;
+  // String? countryValue = "";
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -46,30 +38,16 @@ class _LocationSelectionState extends State<LocationSelection> {
           ),
           dropdownDialogRadius: 10.0,
           searchBarRadius: 10.0,
-          onCountryChanged: (value) {
-            setState(() {
-              countryValue = value;
-            });
+          onCountryChanged: (val) {
+            provider.setCountry(val);
           },
-          onStateChanged: (value) {
-            setState(() {
-              stateValue = value;
-            });
+          onStateChanged: (val) {
+            provider.setState(val);
           },
-          onCityChanged: (value) {
-            setState(() {
-              cityValue = value;
-            });
+          onCityChanged: (val) {
+            provider.setCity(val);
           },
         ),
-        TextButton(
-            onPressed: () {
-              setState(() {
-                address = "$cityValue, $stateValue, $countryValue";
-              });
-            },
-            child: const Text("Print Data")),
-        Text(address ?? '')
       ],
     ));
   }

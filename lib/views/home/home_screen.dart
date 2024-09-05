@@ -1,5 +1,8 @@
 import 'package:agrogenesis/app/app_theme.dart';
+import 'package:agrogenesis/views/crop_advisory/crop_advisory.dart';
 import 'package:agrogenesis/views/crop_yield/crop_yield_prediction.dart';
+import 'package:agrogenesis/views/fertilizer/fertilizer_screen.dart';
+import 'package:agrogenesis/views/seeds/seeds_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/function_button.dart';
@@ -124,12 +127,19 @@ class HomeScreen extends StatelessWidget {
                 const FunctionButton(
                     name: 'Crop Analysis',
                     icon: 'assets/icons/Crop_Analysis.png'),
-                const FunctionButton(
+                FunctionButton(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const CropAdvisoryScreen())),
                     name: 'Crop Advisory',
                     icon: 'assets/icons/Crop_Advisor.png'),
-                const FunctionButton(
-                    name: 'Seeds services', icon: 'assets/icons/Seeds.png'),
-                const FunctionButton(
+                FunctionButton(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SeedsScreen())),
+                    name: 'Seeds services',
+                    icon: 'assets/icons/Seeds.png'),
+                FunctionButton(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const FertilizerScreen())),
                     name: 'Fertilizers Services',
                     icon: 'assets/icons/Pestisides.png'),
                 const FunctionButton(

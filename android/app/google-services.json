@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1040767411175",
+    "project_id": "agro-genesis",
+    "storage_bucket": "agro-genesis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040767411175:android:8889651e3124aa03c39342",
+        "android_client_info": {
+          "package_name": "com.example.agrogenesis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ8SRnrA7Xxb6tLnHpjeX3vQK9uYisIUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,29 +1,115 @@
+import 'package:agrogenesis/providers/crop_yield_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'widgets/location.dart';
-import 'widgets/npk_values.dart';
+import 'widgets/range_text_field.dart';
+import 'widgets/seasons_drop_down.dart';
+import 'widgets/text_input.dart';
 
 class CropYieldPrediction extends StatelessWidget {
   const CropYieldPrediction({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Crop Yeild Prediction'),
-      ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-        child: Column(
-          children: [
-            LocationSelection(),
-            SizedBox(
-              height: 15,
-            ),
-            NpkValues()
-          ],
+    return Consumer<CropYieldProvider>(builder: (context, provider, _) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Crop Yeild Prediction'),
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LocationSelection(
+                  provider: provider,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RangeTextField(
+                      onChanged: (val) => provider.setNValue(val),
+                      label: 'N',
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    RangeTextField(
+                      onChanged: (val) => provider.setPValue(val),
+                      label: 'P',
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    RangeTextField(
+                      onChanged: (val) => provider.setKValue(val),
+                      label: 'K',
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 180,
+                      child: TextInput(
+                        label: 'PH Value',
+                        hintText: 'Enter ph Value',
+                        onChanged: (val) =>
+                            provider.setphValue(double.tryParse(val) ?? 6.5),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    SeasonDropdown(provider: provider),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextInput(
+                    label: 'Crop Name',
+                    hintText: 'Enter Crop Name',
+                    onChanged: (val) => provider.setCropName(val)),
+                const SizedBox(
+                  height: 15,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4CAF50),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: const Text(
+                    'Predict',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 }
