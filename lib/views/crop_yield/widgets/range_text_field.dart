@@ -10,7 +10,7 @@ class RangeTextField extends StatefulWidget {
   final int? min;
   final int? max;
   final String label;
-  final Function(int) onChanged;
+  final Function(String) onChanged;
   const RangeTextField(
       {super.key,
       this.min = 1,
@@ -33,7 +33,7 @@ class _RangeTextFieldState extends State<RangeTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('${widget.label} (mg/Kg),'),
+        Text(widget.label),
         const SizedBox(
           height: 5,
         ),
@@ -42,7 +42,7 @@ class _RangeTextFieldState extends State<RangeTextField> {
           height: 50,
           child: TextFormField(
             controller: _controller,
-            keyboardType: TextInputType.number,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly, // Allow only digits
             ],
@@ -63,8 +63,8 @@ class _RangeTextFieldState extends State<RangeTextField> {
               return null;
             },
             onChanged: (value) {
-              final intValue = int.tryParse(value) ?? widget.min!;
-              widget.onChanged(intValue);
+              // final intValue = (value) ?? widget.min!;
+              widget.onChanged(value);
             },
           ),
         ),

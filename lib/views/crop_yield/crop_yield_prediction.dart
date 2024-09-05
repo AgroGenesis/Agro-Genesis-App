@@ -34,27 +34,33 @@ class CropYieldPrediction extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     RangeTextField(
-                      onChanged: (val) => provider.setNValue(val),
-                      label: 'N',
+                      onChanged: (val) => provider.setNValue(int.tryParse(val)),
+                      label: 'N (mg/Kg)',
+                      min: 0,
+                      max: 200,
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     RangeTextField(
-                      onChanged: (val) => provider.setPValue(val),
-                      label: 'P',
+                      onChanged: (val) => provider.setPValue(int.tryParse(val)),
+                      label: 'P (mg/Kg)',
+                      min: 0,
+                      max: 100,
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     RangeTextField(
-                      onChanged: (val) => provider.setKValue(val),
-                      label: 'K',
+                      onChanged: (val) => provider.setKValue(int.tryParse(val)),
+                      label: 'K (mg/Kg)',
+                      max: 150,
+                      min: 0,
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -77,7 +83,43 @@ class CropYieldPrediction extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RangeTextField(
+                      onChanged: (val) =>
+                          provider.setTemp(double.tryParse(val) ?? 0),
+                      label: 'Temp(°C)',
+                      min: 0,
+                      max: 200,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    RangeTextField(
+                      onChanged: (val) =>
+                          provider.setHumidity(double.tryParse(val) ?? 0),
+                      label: 'Humidity(%)',
+                      min: 0,
+                      max: 100,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    RangeTextField(
+                      onChanged: (val) =>
+                          provider.setRainfall(double.tryParse(val) ?? 0),
+                      label: 'RainFall(mm)',
+                      max: 150,
+                      min: 0,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 TextInput(
                     label: 'Crop Name',
@@ -87,7 +129,11 @@ class CropYieldPrediction extends StatelessWidget {
                   height: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (!provider.nValue.isNaN) {
+                      provider.predictCrop();
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4CAF50),
                     padding: const EdgeInsets.symmetric(
@@ -105,6 +151,21 @@ class CropYieldPrediction extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                if (provider.isLoading)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                if (provider.predictionResult != '' &&
+                    provider.isLoading == false)
+                  Text(
+                    textAlign: TextAlign.center,
+                    'Based on the provided data Suitable Crop is ${provider.predictionResult}',
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  )
               ],
             ),
           ),

@@ -27,7 +27,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   List<Widget> _buildScreens() {
     return [
       const HomeScreen(),
-      const WeatherDatas(),
+      const WeatherInfo(),
       const CartView(),
     ];
   }

@@ -6,6 +6,10 @@ final ThemeData appTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     color: Color(0xFF4CAF50),
     elevation: 0,
+    titleTextStyle: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
     iconTheme: IconThemeData(color: Colors.white),
   ),
   buttonTheme: const ButtonThemeData(
@@ -29,8 +33,12 @@ final ThemeData appTheme = ThemeData(
       borderSide: const BorderSide(color: Color(0xFF4CAF50), width: 2.0),
       borderRadius: BorderRadius.circular(8.0),
     ),
+    border: OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.black54),
+      borderRadius: BorderRadius.circular(8.0),
+    ),
     enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Color(0xFF8B4513)),
+      borderSide: const BorderSide(color: Colors.black54),
       borderRadius: BorderRadius.circular(8.0),
     ),
   ),

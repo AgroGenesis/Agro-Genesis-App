@@ -25,6 +25,7 @@ class _TextInputState extends State<TextInput> {
           height: 5,
         ),
         TextFormField(
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
           controller: controller,
           decoration: InputDecoration(hintText: widget.hintText),
           onChanged: (value) {
