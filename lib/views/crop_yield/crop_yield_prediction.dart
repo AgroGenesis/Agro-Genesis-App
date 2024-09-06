@@ -132,6 +132,7 @@ class CropYieldPrediction extends StatelessWidget {
                   onPressed: () {
                     if (!provider.nValue.isNaN) {
                       provider.predictCrop();
+                      provider.remCrop();
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -158,11 +159,10 @@ class CropYieldPrediction extends StatelessWidget {
                   const Center(
                     child: CircularProgressIndicator(),
                   ),
-                if (provider.predictionResult != '' &&
-                    provider.isLoading == false)
+                if (provider.predictResult != '' && provider.isLoading == false)
                   Text(
                     textAlign: TextAlign.center,
-                    'Based on the provided data Suitable Crop is ${provider.predictionResult}',
+                    'Based on the provided data Suitable Crop is ${provider.predictResult}',
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   )

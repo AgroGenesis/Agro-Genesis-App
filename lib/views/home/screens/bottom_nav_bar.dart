@@ -28,7 +28,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return [
       const HomeScreen(),
       const WeatherInfo(),
-      const CartView(),
+      const CartPage(),
     ];
   }
 

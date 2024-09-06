@@ -89,8 +89,9 @@ class CropYieldProvider extends ChangeNotifier {
   }
 
   bool isLoading = false;
-  var predictionResult = '';
-  Future<void> predictCrop() async {
+  var recommendationResult = '';
+  var predictResult = '';
+  Future<void> remCrop() async {
     isLoading = true;
     notifyListeners();
     try {
@@ -108,7 +109,7 @@ class CropYieldProvider extends ChangeNotifier {
       // Send POST request to Flask API
       var response = await http.post(
         Uri.parse(
-            'http://172.16.29.141:5001/predict'), // Update with your Flask server URL
+            'http://172.16.29.141:5001/recommendation'), // Update with your Flask server URL
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(requestBody),
       );
@@ -116,15 +117,56 @@ class CropYieldProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
 
-        predictionResult = jsonResponse['predicted_crop'];
+        recommendationResult = jsonResponse['predicted_crop'];
       } else {
-        predictionResult = 'Error: ${response.body}';
+        recommendationResult = 'Error: ${response.body}';
       }
     } catch (e) {
-      predictionResult = 'Error: $e';
+      recommendationResult = 'Error: $e';
     }
     isLoading = false;
-    print(predictionResult);
+    print(recommendationResult);
+    notifyListeners();
+  }
+
+  Future<void> predictCrop() async {
+    isLoading = true;
+    notifyListeners();
+    try {
+      // Create request body
+      Map<String, dynamic> requestBody = {
+        // 'n': nValue,
+        // 'p': pValue,
+        // 'k': kValue,
+        // 'temperature': temp,
+        // 'humidity': humidity,
+        // 'ph': phValue,
+        // 'rainfall': rainFall,
+        'Area': 1,
+        'Season': selectedSeason.toString(),
+        'Crop': cropName
+      };
+
+      // Send POST request to Flask API
+      var response = await http.post(
+        Uri.parse(
+            'http://172.16.29.141:5001/predict'), // Update with your Flask server URL
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+        print(jsonResponse);
+        predictResult = jsonResponse['crop_prediction'];
+      } else {
+        predictResult = 'Error: ${response.body}';
+      }
+    } catch (e) {
+      predictResult = 'Error: $e';
+    }
+    isLoading = false;
+    print(predictResult);
     notifyListeners();
   }
 }

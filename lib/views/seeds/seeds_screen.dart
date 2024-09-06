@@ -1,5 +1,7 @@
 import 'package:agrogenesis/models/seeds.dart';
+import 'package:agrogenesis/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SeedsScreen extends StatelessWidget {
   const SeedsScreen({super.key});
@@ -58,7 +60,18 @@ class SeedsScreen extends StatelessWidget {
                   childAspectRatio: 0.70, // Adjust the card's aspect ratio
                 ),
                 itemBuilder: (context, index) {
-                  return SeedCard(seeds: seedsList[index]);
+                  return SeedCard(
+                      onTap: () {
+                        Provider.of<CartProvider>(context, listen: false)
+                            .addItem(
+                          'seed$index',
+                          seedsList[index].seedName,
+                          seedsList[index].imageUrl,
+                          double.tryParse(seedsList[index].price) ?? 120,
+                          3.5,
+                        );
+                      },
+                      seeds: seedsList[index]);
                 },
               ),
             ),
@@ -71,26 +84,27 @@ class SeedsScreen extends StatelessWidget {
 
 class SeedCard extends StatelessWidget {
   final Seeds seeds;
-
+  final Function()? onTap;
   const SeedCard({
     super.key,
     required this.seeds,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => ProductDetailsScreen(
-          //       imageUrl: imageUrl,
-          //       seedName: seedName,
-          //       price: price,
-          //     ),
-          //   ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailsScreen(
+                imageUrl: seeds.imageUrl,
+                seedName: seeds.seedName,
+                price: seeds.price,
+              ),
+            ),
+          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -98,7 +112,6 @@ class SeedCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                    // color: Color(0xFFF5F5DC),
                     color: Colors.grey.withOpacity(0.2),
                     spreadRadius: 2,
                     blurRadius: 2,
@@ -131,11 +144,10 @@ class SeedCard extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onTap,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[800],
-                    foregroundColor:
-                        Colors.white, // Adjusted green color intensity
+                    foregroundColor: Colors.white,
                   ),
                   child: const Text('Add to Cart'),
                 )
@@ -211,7 +223,7 @@ class ProductDetailsScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[800],
+                  backgroundColor: Colors.white,
                 ),
                 child: const Text('Add to Cart'),
               ),
