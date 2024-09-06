@@ -193,7 +193,7 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'seeds Services',
+                    'Seeds Services',
                     style: TextStyle(
                         color: greenColor,
                         fontSize: 18,

@@ -92,7 +92,7 @@ class CropYieldProvider extends ChangeNotifier {
   var recommendationResult = '';
   var predictResult = '';
   Future<void> remCrop() async {
-    isLoading = true;
+    // isLoading = true;
     notifyListeners();
     try {
       // Create request body
@@ -116,21 +116,21 @@ class CropYieldProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
-
-        recommendationResult = jsonResponse['predicted_crop'];
+        print(jsonResponse);
+        recommendationResult = jsonResponse['recommended_crop'];
       } else {
         recommendationResult = 'Error: ${response.body}';
       }
     } catch (e) {
       recommendationResult = 'Error: $e';
     }
-    isLoading = false;
+    // isLoading = false;
     print(recommendationResult);
     notifyListeners();
   }
 
   Future<void> predictCrop() async {
-    isLoading = true;
+    // isLoading = true;
     notifyListeners();
     try {
       // Create request body
@@ -165,7 +165,7 @@ class CropYieldProvider extends ChangeNotifier {
     } catch (e) {
       predictResult = 'Error: $e';
     }
-    isLoading = false;
+    // isLoading = false;
     print(predictResult);
     notifyListeners();
   }

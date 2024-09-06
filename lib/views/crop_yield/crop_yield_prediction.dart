@@ -70,6 +70,8 @@ class CropYieldPrediction extends StatelessWidget {
                     SizedBox(
                       width: 180,
                       child: TextInput(
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
                         label: 'PH Value',
                         hintText: 'Enter ph Value',
                         onChanged: (val) =>
@@ -122,6 +124,7 @@ class CropYieldPrediction extends StatelessWidget {
                   height: 10,
                 ),
                 TextInput(
+                    keyboardType: TextInputType.name,
                     label: 'Crop Name',
                     hintText: 'Enter Crop Name',
                     onChanged: (val) => provider.setCropName(val)),
@@ -131,8 +134,8 @@ class CropYieldPrediction extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (!provider.nValue.isNaN) {
-                      provider.predictCrop();
                       provider.remCrop();
+                      provider.predictCrop();
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -159,12 +162,22 @@ class CropYieldPrediction extends StatelessWidget {
                   const Center(
                     child: CircularProgressIndicator(),
                   ),
-                if (provider.predictResult != '' && provider.isLoading == false)
+                if (provider.recommendationResult != '' &&
+                    provider.isLoading == false)
                   Text(
                     textAlign: TextAlign.center,
-                    'Based on the provided data Suitable Crop is ${provider.predictResult}',
+                    'Based on the provided data Suitable Crop is ${provider.recommendationResult}',
                     style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                const SizedBox(
+                  height: 5,
+                ),
+                if (provider.recommendationResult != provider.cropName)
+                  const Text(
+                    textAlign: TextAlign.center,
+                    'The conditions aren\'t ideal for your crop. Try improving soil fertility or switch to a recommended crop.',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   )
               ],
             ),

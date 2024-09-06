@@ -5,10 +5,12 @@ class TextInput extends StatefulWidget {
       {super.key,
       required this.onChanged,
       required this.hintText,
-      required this.label});
+      required this.label,
+      required this.keyboardType});
   final Function(String) onChanged;
   final String hintText;
   final String label;
+  final TextInputType keyboardType;
   @override
   State<TextInput> createState() => _TextInputState();
 }
@@ -25,7 +27,7 @@ class _TextInputState extends State<TextInput> {
           height: 5,
         ),
         TextFormField(
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          keyboardType: widget.keyboardType,
           controller: controller,
           decoration: InputDecoration(hintText: widget.hintText),
           onChanged: (value) {
